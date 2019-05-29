@@ -45,5 +45,111 @@ namespace Test
             g.Player.Draw();
             Assert.That(g.Player.Hand.Size, Is.EqualTo(4));
         }
+
+        [Test]
+        public void DealerWins()
+        {
+            Card c1 = new Card(CardSuit.Hearts, CardValue.Jack);
+            Card c2 = new Card(CardSuit.Hearts, CardValue.Ace);
+            g.House.Hand.AddCard(c1);
+            g.House.Hand.AddCard(c2);
+            Card c3 = new Card(CardSuit.Clubs, CardValue.Jack);
+            Card c4 = new Card(CardSuit.Clubs, CardValue.Queen);
+            g.Player.Hand.AddCard(c3);
+            g.Player.Hand.AddCard(c4);
+            Assert.That(g.Winner(), Is.EqualTo(Winner.Dealer));
+        }
+
+        [Test]
+        public void DealerWins2()
+        {
+            Card c1 = new Card(CardSuit.Hearts, CardValue.Jack);
+            Card c2 = new Card(CardSuit.Hearts, CardValue.Nine);
+            g.House.Hand.AddCard(c1);
+            g.House.Hand.AddCard(c2);
+            Card c3 = new Card(CardSuit.Clubs, CardValue.Jack);
+            Card c4 = new Card(CardSuit.Clubs, CardValue.Queen);
+            Card c5 = new Card(CardSuit.Clubs, CardValue.Three);
+            g.Player.Hand.AddCard(c3);
+            g.Player.Hand.AddCard(c4);
+            g.Player.Hand.AddCard(c5);
+            Assert.That(g.Winner(), Is.EqualTo(Winner.Dealer));
+        }
+
+        [Test]
+        public void DealerWins3()
+        {
+            Card c1 = new Card(CardSuit.Hearts, CardValue.Jack);
+            Card c2 = new Card(CardSuit.Hearts, CardValue.Ace);
+            g.House.Hand.AddCard(c1);
+            g.House.Hand.AddCard(c2);
+            Card c3 = new Card(CardSuit.Clubs, CardValue.Jack);
+            Card c4 = new Card(CardSuit.Clubs, CardValue.Eight);
+            Card c5 = new Card(CardSuit.Clubs, CardValue.Three);
+            g.Player.Hand.AddCard(c3);
+            g.Player.Hand.AddCard(c4);
+            g.Player.Hand.AddCard(c5);
+            Assert.That(g.Winner(), Is.EqualTo(Winner.Dealer));
+        }
+
+        [Test]
+        public void Tie()
+        {
+            Card c1 = new Card(CardSuit.Hearts, CardValue.Jack);
+            Card c2 = new Card(CardSuit.Hearts, CardValue.Ace);
+            g.House.Hand.AddCard(c1);
+            g.House.Hand.AddCard(c2);
+            Card c3 = new Card(CardSuit.Clubs, CardValue.Jack);
+            Card c4 = new Card(CardSuit.Clubs, CardValue.Ace);
+            g.Player.Hand.AddCard(c3);
+            g.Player.Hand.AddCard(c4);
+            Assert.That(g.Winner(), Is.EqualTo(Winner.Tie));
+        }
+
+        [Test]
+        public void PlayerWins()
+        {
+            Card c1 = new Card(CardSuit.Hearts, CardValue.Jack);
+            Card c2 = new Card(CardSuit.Hearts, CardValue.Eight);
+            g.House.Hand.AddCard(c1);
+            g.House.Hand.AddCard(c2);
+            Card c3 = new Card(CardSuit.Clubs, CardValue.Jack);
+            Card c4 = new Card(CardSuit.Clubs, CardValue.Ace);
+            g.Player.Hand.AddCard(c3);
+            g.Player.Hand.AddCard(c4);
+            Assert.That(g.Winner(), Is.EqualTo(Winner.Player));
+        }
+
+        [Test]
+        public void PlayerWins2()
+        {
+            Card c1 = new Card(CardSuit.Hearts, CardValue.Jack);
+            Card c2 = new Card(CardSuit.Hearts, CardValue.Eight);
+            Card c3 = new Card(CardSuit.Hearts, CardValue.Three);
+            g.House.Hand.AddCard(c1);
+            g.House.Hand.AddCard(c2);
+            g.House.Hand.AddCard(c3);
+            Card c3 = new Card(CardSuit.Clubs, CardValue.Jack);
+            Card c4 = new Card(CardSuit.Clubs, CardValue.Ace);
+            g.Player.Hand.AddCard(c3);
+            g.Player.Hand.AddCard(c4);
+            Assert.That(g.Winner(), Is.EqualTo(Winner.Player));
+        }
+
+        [Test]
+        public void PlayerWins3()
+        {
+            Card c1 = new Card(CardSuit.Hearts, CardValue.Jack);
+            Card c2 = new Card(CardSuit.Hearts, CardValue.Four);
+            Card c3 = new Card(CardSuit.Hearts, CardValue.Eight);
+            g.House.Hand.AddCard(c1);
+            g.House.Hand.AddCard(c2);
+            g.House.Hand.AddCard(c3);
+            Card c3 = new Card(CardSuit.Clubs, CardValue.Jack);
+            Card c4 = new Card(CardSuit.Clubs, CardValue.Five);
+            g.Player.Hand.AddCard(c3);
+            g.Player.Hand.AddCard(c4);
+            Assert.That(g.Winner(), Is.EqualTo(Winner.Player));
+        }
     }
 }
