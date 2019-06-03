@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using NUnit.Framework;
+using Model.Core;
 
 namespace Test
 {
@@ -10,28 +9,29 @@ namespace Test
         [Test]
         public void Size()
         {
-            Card c1 = new Card(CardSuit.Club, CardValue.Queen);
-            Card c2 = new Card(CardSuit.Heart, CardValue.Seven);
+            Card c1 = new Card(CardSuit.Clubs, CardRank.Queen);
+            Card c2 = new Card(CardSuit.Hearts, CardRank.Seven);
             Hand h = new Hand();
             h.AddCard(c1);
             h.AddCard(c2);
             Assert.That(h.Size, Is.EqualTo(2));
-            Card c3 = new Card(CardSuit.Heart, CardValue.Five);
+            Card c3 = new Card(CardSuit.Hearts, CardRank.Five);
+            h.AddCard(c3);
             Assert.That(h.Size, Is.EqualTo(3));
         }
 
         [Test]
         public void Summation()
         {
-            Card c1 = new Card(CardSuit.Club, CardValue.Queen);
-            Card c2 = new Card(CardSuit.Heart, CardValue.Seven);
+            Card c1 = new Card(CardSuit.Clubs, CardRank.Queen);
+            Card c2 = new Card(CardSuit.Hearts, CardRank.Seven);
             Hand h = new Hand();
             h.AddCard(c1);
             h.AddCard(c2);
             Assert.That(h.Value, Is.EqualTo(17));
 
-            c1 = new Card(CardSuit.Club, CardValue.Ace);
-            c2 = new Card(CardSuit.Heart, CardValue.Seven);
+            c1 = new Card(CardSuit.Clubs, CardRank.Ace);
+            c2 = new Card(CardSuit.Hearts, CardRank.Seven);
             h = new Hand();
             h.AddCard(c1);
             h.AddCard(c2);
@@ -41,13 +41,13 @@ namespace Test
         [Test]
         public void SummationSoft()
         {
-            Card c1 = new Card(CardSuit.Club, CardValue.Ace);
-            Card c2 = new Card(CardSuit.Heart, CardValue.Ace);
+            Card c1 = new Card(CardSuit.Clubs, CardRank.Ace);
+            Card c2 = new Card(CardSuit.Hearts, CardRank.Ace);
             Hand h = new Hand();
             h.AddCard(c1);
             h.AddCard(c2);
             Assert.That(h.Value, Is.EqualTo(12));
-            Card c3 = new Card(CardSuit.Diamond, CardValue.Jack);
+            Card c3 = new Card(CardSuit.Diamonds, CardRank.Jack);
             h.AddCard(c3);
             Assert.That(h.Value, Is.EqualTo(12));
         }
@@ -55,9 +55,9 @@ namespace Test
         [Test]
         public void Bust()
         {
-            Card c1 = new Card(CardSuit.Club, CardValue.Three);
-            Card c2 = new Card(CardSuit.Heart, CardValue.Queen);
-            Card c3 = new Card(CardSuit.Diamond, CardValue.Jack);
+            Card c1 = new Card(CardSuit.Clubs, CardRank.Three);
+            Card c2 = new Card(CardSuit.Hearts, CardRank.Queen);
+            Card c3 = new Card(CardSuit.Diamonds, CardRank.Jack);
             Hand h = new Hand();
             h.AddCard(c1);
             h.AddCard(c2);
