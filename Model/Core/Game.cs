@@ -35,10 +35,10 @@ namespace Simulation.Core
 
         public void NewGame()
         {
-            if (deck.Size < 10)
-            {
-                deck.ResetDeck();
-            }
+            deck.ResetDeck();
+            //if (deck.Size < 10)
+            //{
+            //}
             Dealer.Clear();
             Player.Clear();
             Dealer.AddCard(deck.Draw());
@@ -103,7 +103,7 @@ namespace Simulation.Core
 
         public Result Hit()
         {
-            Player.AddCard(deck.Draw());
+            PlayerDraw();
             if (Player.Bust)
             {
                 NewGame();
@@ -122,7 +122,7 @@ namespace Simulation.Core
         {
             while (Dealer.Value < 17)
             {
-                Dealer.AddCard(deck.Draw());
+                DealerDraw();
             }
             Result winner = Winner();
             NewGame();

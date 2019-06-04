@@ -10,14 +10,28 @@ namespace Simulation
         static void Main(string[] args)
         {
             Simulate(new SimpleBot());
-            //Simulate(new OneLevelMCBot());
+            Simulate(new MonteCarloBot());
 
         }
 
         private static void Simulate(Bot bot)
         {
-            double winPercentage = bot.Play(new Game(), GAMESTOPLAY);
-            Console.WriteLine(string.Format("{0}%", winPercentage));
+            int totalPlayed = 0;
+            int wins = 0;
+            Game game = new Game();
+            while (totalPlayed < GAMESTOPLAY)
+            {
+                Result res = bot.Play(game);
+                if (res != Result.None)
+                {
+                    totalPlayed++;
+                    if (res == Result.Player)
+                    {
+                        wins++;
+                    }
+                }
+            }
+            Console.WriteLine(string.Format("{0}%", (double)wins / totalPlayed * 100));
         }
     }
 }

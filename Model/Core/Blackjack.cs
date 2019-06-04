@@ -15,6 +15,7 @@ namespace Simulation.Core
 
         Deck Deck { get; }
 
+        Object Clone();
 
     }
 }
