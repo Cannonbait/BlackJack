@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Simulation.Core
 {
-    public interface Blackjack
+    public interface IBlackjack
     {
         Result Hit();
         Result Stand();

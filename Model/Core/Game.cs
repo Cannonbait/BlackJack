@@ -6,7 +6,7 @@ namespace Simulation.Core
 {
     public enum Result { Dealer, Player, Tie, None };
 
-    public class Game : Blackjack
+    public class Game : IBlackjack
     {
         private Deck deck = new Deck();
 

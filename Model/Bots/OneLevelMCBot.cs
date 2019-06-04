@@ -10,7 +10,7 @@ namespace Simulation.Bots
     {
         const int SIMULATIONS = 100;
 
-        public double Play(Blackjack game, int gamesPlayed)
+        public double Play(IBlackjack game, int gamesPlayed)
         {
             throw new NotImplementedException();
         }

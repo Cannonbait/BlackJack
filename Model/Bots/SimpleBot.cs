@@ -8,7 +8,7 @@ namespace Simulation.Bots
     public class SimpleBot : Bot
     {
 
-        public double Play(Blackjack game, int gamesPlayed)
+        public double Play(IBlackjack game, int gamesPlayed)
         {
             int totalPlayed = 0;
             int wins = 0;
