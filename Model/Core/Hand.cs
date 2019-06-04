@@ -22,34 +22,45 @@ namespace Simulation.Core
             cards.Clear();
         }
 
-        public int Value => HandValue(cards);
-
-        public int HandValue(HashSet<Card> cards)
+        public int Value
         {
-            int value = 0;
-            int aces = 0;
-            foreach (Card card in cards)
+            get
             {
-                if (card.Rank == CardRank.Ace)
+                int value = 0;
+                int aces = 0;
+                foreach (Card card in cards)
                 {
-                    value += 11;
-                    aces++;
+                    if (card.Rank == CardRank.Ace)
+                    {
+                        value += 11;
+                        aces++;
+                    }
+                    else if (card.Rank == CardRank.Jack || card.Rank == CardRank.Queen || card.Rank == CardRank.King)
+                    {
+                        value += 10;
+                    }
+                    else
+                    {
+                        value += (int)card.Rank;
+                    }
                 }
-                else if (card.Rank == CardRank.Jack || card.Rank == CardRank.Queen || card.Rank == CardRank.King)
+                while (value > 21 && aces > 0)
                 {
-                    value += 10;
+                    value -= 10;
+                    aces--;
                 }
-                else
-                {
-                    value += (int)card.Rank;
-                }
+                return value;
             }
-            while (value > 21 && aces > 0)
-            {
-                value -= 10;
-                aces--;
-            }
-            return value;
+        }
+
+
+        public bool AddCardBust(Card card)
+        {
+            cards.Add(card);
+            bool bust = Bust;
+            cards.Remove(card);
+            return bust;
+
         }
 
         public bool HasBlackjack()

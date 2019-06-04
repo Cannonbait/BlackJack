@@ -13,6 +13,8 @@ namespace Simulation.Core
 
         Hand DealerHand { get; }
 
+        Deck Deck { get; }
+
         int GamesPlayed { get; }
         int PlayerWins { get; }
         int DealerWins { get; }

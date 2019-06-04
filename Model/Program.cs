@@ -6,13 +6,18 @@ namespace Simulation
 {
     class Program
     {
+        const int GAMESTOPLAY = 500;
         static void Main(string[] args)
         {
-            int gamesToPlay = 500;
-            Blackjack blackjack = new Game();
-            Bot bot = new SimpleBot();
-            bot.Play(blackjack, gamesToPlay);
+            Simulate(new SimpleBot());
+            Simulate(new MonteCarloBot());
 
+        }
+
+        private static void Simulate(Bot bot)
+        {
+            Blackjack blackjack = new Game();
+            bot.Play(blackjack, GAMESTOPLAY);
             Console.WriteLine(string.Format("{0}%", (double)blackjack.PlayerWins / blackjack.GamesPlayed * 100));
         }
     }

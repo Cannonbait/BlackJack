@@ -28,6 +28,8 @@ namespace Simulation.Core
         public Hand PlayerHand => Player;
         public Hand DealerHand => Dealer;
 
+        public Deck Deck => deck;
+
         public void NewGame()
         {
             if (deck.Size < 10)

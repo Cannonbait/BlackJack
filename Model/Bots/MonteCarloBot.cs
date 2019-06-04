@@ -18,12 +18,28 @@ namespace Simulation.Bots
 
         private void MakePlay(Blackjack game)
         {
+            int losses = 0;
+            Hand hand = game.PlayerHand;
+
 
             for (int i = 0; i < SIMULATIONS; i++)
             {
+                Card c = game.Deck.SimulatedDraw();
+
+                if (hand.AddCardBust(c))
+                {
+                    losses++;
+                }
 
             }
-
+            if (losses > SIMULATIONS / 2)
+            {
+                game.Stand();
+            }
+            else
+            {
+                game.Hit();
+            }
         }
     }
 }
