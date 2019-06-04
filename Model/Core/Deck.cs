@@ -47,5 +47,10 @@ namespace Simulation.Core
         {
             return new Deck(new List<Card>(cards));
         }
+
+        public void Remove(Card c)
+        {
+            cards.Remove(c);
+        }
     }
 }

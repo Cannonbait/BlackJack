@@ -12,12 +12,12 @@ namespace Simulation.Core
 
 
 
-        public Hand Dealer { get; } = new Hand();
-        public Hand Player { get; } = new Hand();
+        private Hand Dealer { get; } = new Hand();
+        private Hand Player { get; } = new Hand();
 
 
-        public Hand PlayerHand => Player;
-        public Hand DealerHand => Dealer;
+        public Hand PlayerHand => (Hand)Player.Clone();
+        public Hand DealerHand => (Hand)Dealer.Clone();
 
         public Deck Deck => deck;
 
@@ -45,6 +45,35 @@ namespace Simulation.Core
             Player.AddCard(deck.Draw());
             Player.AddCard(deck.Draw());
 
+        }
+
+        public void PlayerDraw()
+        {
+            Player.AddCard(Deck.Draw());
+        }
+
+        public void PlayerDraw(Card c)
+        {
+            Deck.Remove(c);
+            Player.AddCard(c);
+        }
+
+        public void DealerDraw()
+        {
+            Dealer.AddCard(Deck.Draw());
+        }
+
+
+        public void DealerDraw(Card c)
+        {
+            Deck.Remove(c);
+            Dealer.AddCard(c);
+        }
+
+        public void ClearHands()
+        {
+            Player.Clear();
+            Dealer.Clear();
         }
 
 
