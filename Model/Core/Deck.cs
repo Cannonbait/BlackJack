@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.Core
+namespace Simulation.Core
 {
-    
+
+
     public class Deck
     {
         List<Card> cards = new List<Card>();
@@ -27,25 +28,19 @@ namespace Model.Core
                     cards.Add(new Card(suit, rank));
                 }
             }
-            Shuffle();
-        }
-
-        public void Shuffle()
-        {
-            for (int i1 = 0; i1 < cards.Count-1; i1++)
-            {
-                int i2 = rnd.Next(i1, cards.Count);
-                Card tmp = cards[i2];
-                cards[i2] = cards[i1];
-                cards[i1] = tmp;
-            }
         }
 
         public Card Draw()
         {
-            Card c = cards[0];
-            cards.RemoveAt(0);
+            int i = rnd.Next(cards.Count);
+            Card c = cards[i];
+            cards.RemoveAt(i);
             return c;
+        }
+
+        public Card SimulatedDraw()
+        {
+            return cards[rnd.Next(cards.Count)];
         }
     }
 }

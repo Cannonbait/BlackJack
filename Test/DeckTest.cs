@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Model.Core;
+using Simulation.Core;
 
 namespace Test
 {

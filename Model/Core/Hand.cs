@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.Core
+namespace Simulation.Core
 {
 
     public class Hand
@@ -22,35 +22,34 @@ namespace Model.Core
             cards.Clear();
         }
 
-        public int Value
+        public int Value => HandValue(cards);
+
+        public int HandValue(HashSet<Card> cards)
         {
-            get
+            int value = 0;
+            int aces = 0;
+            foreach (Card card in cards)
             {
-                int value = 0;
-                int aces = 0;
-                foreach (Card card in cards)
+                if (card.Rank == CardRank.Ace)
                 {
-                    if (card.Rank == CardRank.Ace)
-                    {
-                        value += 11;
-                        aces++;
-                    }
-                    else if (card.Rank == CardRank.Jack || card.Rank == CardRank.Queen || card.Rank == CardRank.King)
-                    {
-                        value += 10;
-                    }
-                    else
-                    {
-                        value += (int)card.Rank;
-                    }
+                    value += 11;
+                    aces++;
                 }
-                while (value > 21 && aces > 0)
+                else if (card.Rank == CardRank.Jack || card.Rank == CardRank.Queen || card.Rank == CardRank.King)
                 {
-                    value -= 10;
-                    aces--;
+                    value += 10;
                 }
-                return value;
+                else
+                {
+                    value += (int)card.Rank;
+                }
             }
+            while (value > 21 && aces > 0)
+            {
+                value -= 10;
+                aces--;
+            }
+            return value;
         }
 
         public bool HasBlackjack()

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{3D353C9E-3CC6-4297-8707-893B0B5EA60B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulation", "Model\Simulation.csproj", "{3D353C9E-3CC6-4297-8707-893B0B5EA60B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{A883413B-3571-454B-8F5D-A1A368116EF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{A883413B-3571-454B-8F5D-A1A368116EF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

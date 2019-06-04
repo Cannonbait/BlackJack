@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using Model.Core;
-
+using Simulation.Core;
 namespace Test
 {
     class GameTest
@@ -24,7 +23,7 @@ namespace Test
         [Test]
         public void HandSizeStartGame()
         {
-            g.StartGame();
+            g.NewGame();
             Assert.That(g.Dealer.Size, Is.EqualTo(1));
             Assert.That(g.Player.Size, Is.EqualTo(2));
             Assert.That(g.Dealer.Value, Is.LessThan(12));
@@ -36,7 +35,7 @@ namespace Test
         [Test]
         public void DrawCard()
         {
-            g.StartGame();
+            g.NewGame();
             g.HouseDraw();
             Assert.That(g.Dealer.Size, Is.EqualTo(2));
             g.HouseDraw();
