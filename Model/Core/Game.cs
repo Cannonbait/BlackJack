@@ -30,6 +30,11 @@ namespace Simulation.Core
 
         public Deck Deck => deck;
 
+        public Game()
+        {
+            NewGame();
+        }
+
         public void NewGame()
         {
             if (deck.Size < 10)

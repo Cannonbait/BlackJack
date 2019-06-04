@@ -6,11 +6,11 @@ namespace Simulation
 {
     class Program
     {
-        const int GAMESTOPLAY = 500;
+        const int GAMESTOPLAY = 1000;
         static void Main(string[] args)
         {
             Simulate(new SimpleBot());
-            Simulate(new MonteCarloBot());
+            Simulate(new OneLevelMCBot());
 
         }
 

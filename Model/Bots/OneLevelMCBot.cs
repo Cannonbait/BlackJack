@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using Simulation.Core;
 
 namespace Simulation.Bots
 {
-    class MonteCarloBot : Bot
+    class OneLevelMCBot : Bot
     {
-        const int SIMULATIONS = 500;
+        const int SIMULATIONS = 100;
         public void Play(Blackjack game, int gamesPlayed)
         {
             while (game.GamesPlayed < gamesPlayed)
@@ -24,9 +25,10 @@ namespace Simulation.Bots
 
             for (int i = 0; i < SIMULATIONS; i++)
             {
-                Card c = game.Deck.SimulatedDraw();
+                Card card = game.Deck.SimulatedDraw();
 
-                if (hand.AddCardBust(c))
+
+                if (hand.AddCardBust(card))
                 {
                     losses++;
                 }

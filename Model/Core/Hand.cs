@@ -32,17 +32,9 @@ namespace Simulation.Core
                 {
                     if (card.Rank == CardRank.Ace)
                     {
-                        value += 11;
                         aces++;
                     }
-                    else if (card.Rank == CardRank.Jack || card.Rank == CardRank.Queen || card.Rank == CardRank.King)
-                    {
-                        value += 10;
-                    }
-                    else
-                    {
-                        value += (int)card.Rank;
-                    }
+                    value += card.Value;
                 }
                 while (value > 21 && aces > 0)
                 {
@@ -67,5 +59,7 @@ namespace Simulation.Core
         {
             return Size == 2 && Value == 21;
         }
+
+        public HashSet<Card> Cards => cards;
     }
 }
