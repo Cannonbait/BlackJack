@@ -6,7 +6,7 @@ namespace Simulation.Core
 {
     public enum Result { Dealer, Player, Tie, None };
 
-    public class Game : IBlackjack
+    public class Game : IBlackjack, ICloneable
     {
         private Deck deck = new Deck();
 
@@ -100,5 +100,9 @@ namespace Simulation.Core
             return winner;
         }
 
+        public object Clone()
+        {
+            return new Game((Hand)Dealer.Clone(), (Hand)Player.Clone(), (Deck)deck.Clone());
+        }
     }
 }

@@ -5,8 +5,18 @@ using System.Text;
 namespace Simulation.Core
 {
 
-    public class Hand
+    public class Hand : ICloneable
     {
+        public Hand()
+        {
+
+        }
+
+        public Hand(HashSet<Card> cards)
+        {
+            this.cards = cards;
+        }
+
         private HashSet<Card> cards = new HashSet<Card>();
         public void AddCard(Card c)
         {
@@ -49,6 +59,11 @@ namespace Simulation.Core
         public bool HasBlackjack()
         {
             return Size == 2 && Value == 21;
+        }
+
+        public object Clone()
+        {
+            return new Hand(new HashSet<Card>(cards));
         }
 
         public HashSet<Card> Cards => cards;

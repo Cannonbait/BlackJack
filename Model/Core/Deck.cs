@@ -6,14 +6,19 @@ namespace Simulation.Core
 {
 
 
-    public class Deck
+    public class Deck : ICloneable
     {
         List<Card> cards = new List<Card>();
-        private Random rnd = new Random();
+        private static Random rnd = new Random();
 
         public Deck()
         {
             ResetDeck();
+        }
+
+        public Deck(List<Card> cards)
+        {
+            this.cards = cards;
         }
 
         public int Size => cards.Count;
@@ -36,6 +41,11 @@ namespace Simulation.Core
             Card c = cards[i];
             cards.RemoveAt(i);
             return c;
+        }
+
+        public object Clone()
+        {
+            return new Deck(new List<Card>(cards));
         }
     }
 }
