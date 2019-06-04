@@ -16,8 +16,8 @@ namespace Test
         [Test]
         public void HandSizeInitial()
         {
-            Assert.That(g.Dealer.Size, Is.EqualTo(0));
-            Assert.That(g.Player.Size, Is.EqualTo(0));
+            Assert.That(g.Dealer.Size, Is.EqualTo(1));
+            Assert.That(g.Player.Size, Is.EqualTo(2));
         }
 
         [Test]
@@ -36,6 +36,8 @@ namespace Test
         [Test]
         public void DealerHigherValueHand()
         {
+            g.Dealer.Clear();
+            g.Player.Clear();
             Card c1 = new Card(CardSuit.Hearts, CardRank.Jack);
             Card c2 = new Card(CardSuit.Hearts, CardRank.Ace);
             g.Dealer.AddCard(c1);
@@ -50,6 +52,8 @@ namespace Test
         [Test]
         public void PlayerBusts()
         {
+            g.Dealer.Clear();
+            g.Player.Clear();
             Card c1 = new Card(CardSuit.Hearts, CardRank.Jack);
             Card c2 = new Card(CardSuit.Hearts, CardRank.Nine);
             g.Dealer.AddCard(c1);
@@ -66,6 +70,8 @@ namespace Test
         [Test]
         public void DealerBlackjackVsPlayer21()
         {
+            g.Dealer.Clear();
+            g.Player.Clear();
             Card c1 = new Card(CardSuit.Hearts, CardRank.Jack);
             Card c2 = new Card(CardSuit.Hearts, CardRank.Ace);
             g.Dealer.AddCard(c1);
@@ -82,6 +88,8 @@ namespace Test
         [Test]
         public void Tie()
         {
+            g.Dealer.Clear();
+            g.Player.Clear();
             Card c1 = new Card(CardSuit.Hearts, CardRank.Jack);
             Card c2 = new Card(CardSuit.Hearts, CardRank.Ace);
             g.Dealer.AddCard(c1);
@@ -96,6 +104,8 @@ namespace Test
         [Test]
         public void PlayerHigherValueHand()
         {
+            g.Dealer.Clear();
+            g.Player.Clear();
             Card c1 = new Card(CardSuit.Hearts, CardRank.Jack);
             Card c2 = new Card(CardSuit.Hearts, CardRank.Eight);
             g.Dealer.AddCard(c1);
@@ -110,6 +120,8 @@ namespace Test
         [Test]
         public void PlayerBlackjackVSHouse21()
         {
+            g.Dealer.Clear();
+            g.Player.Clear();
             Card c1 = new Card(CardSuit.Hearts, CardRank.Jack);
             Card c2 = new Card(CardSuit.Hearts, CardRank.Eight);
             Card c3 = new Card(CardSuit.Hearts, CardRank.Three);
@@ -126,6 +138,8 @@ namespace Test
         [Test]
         public void DealerBusts()
         {
+            g.Dealer.Clear();
+            g.Player.Clear();
             Card c1 = new Card(CardSuit.Hearts, CardRank.Jack);
             Card c2 = new Card(CardSuit.Hearts, CardRank.Four);
             Card c3 = new Card(CardSuit.Hearts, CardRank.Eight);
