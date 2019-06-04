@@ -75,6 +75,7 @@ namespace Simulation.Core
             }
             else if (Player.Value == 21)
             {
+                NewGame();
                 return Result.Player;
             }
             return Result.None;
