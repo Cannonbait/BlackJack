@@ -6,20 +6,14 @@ namespace Simulation.Core
 {
     public interface Blackjack
     {
-        void Hit();
-        void Stand();
+        Result Hit();
+        Result Stand();
 
         Hand PlayerHand { get; }
 
         Hand DealerHand { get; }
 
         Deck Deck { get; }
-
-        int GamesPlayed { get; }
-        int PlayerWins { get; }
-        int DealerWins { get; }
-        //void DoubleDown();
-        //void Split();
 
 
     }

@@ -9,35 +9,10 @@ namespace Simulation.Bots
     class OneLevelMCBot : Bot
     {
         const int SIMULATIONS = 100;
-        public void Play(Blackjack game, int gamesPlayed)
+
+        public double Play(Blackjack game, int gamesPlayed)
         {
-            while (game.GamesPlayed < gamesPlayed)
-            {
-                MakePlay(game);
-            }
+            throw new NotImplementedException();
         }
-
-        private void MakePlay(Blackjack game)
-        {
-            //int losses = 0;
-            //Hand hand = game.PlayerHand;
-
-
-            //for (int i = 0; i < SIMULATIONS; i++)
-            //{
-
-
-            //}
-            //if (losses > SIMULATIONS / 2)
-            //{
-            //    game.Stand();
-            //}
-            //else
-            //{
-            //    game.Hit();
-            //}
-            game.Stand();
-        }
-
     }
 }

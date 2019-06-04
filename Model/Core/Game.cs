@@ -4,26 +4,17 @@ using System.Text;
 
 namespace Simulation.Core
 {
-    public enum Result { Dealer, Player, Tie };
+    public enum Result { Dealer, Player, Tie, None };
 
     public class Game : Blackjack
     {
         private Deck deck = new Deck();
 
-        private int playerWinCount = 0;
-        private int dealerWinCount = 0;
-
-        private int gamesPlayed = 0;
 
 
         public Hand Dealer { get; } = new Hand();
         public Hand Player { get; } = new Hand();
 
-        public int GamesPlayed => gamesPlayed;
-
-        public int PlayerWins => playerWinCount;
-
-        public int DealerWins => dealerWinCount;
 
         public Hand PlayerHand => Player;
         public Hand DealerHand => Dealer;
@@ -50,16 +41,6 @@ namespace Simulation.Core
         }
 
 
-        public void PlayerDraw()
-        {
-            Player.AddCard(deck.Draw());
-        }
-
-        public void HouseDraw()
-        {
-            Dealer.AddCard(deck.Draw());
-        }
-
         public Result Winner()
         {
             if (Player.Bust)
@@ -84,34 +65,31 @@ namespace Simulation.Core
             }
         }
 
-        public void Hit()
+        public Result Hit()
         {
             Player.AddCard(deck.Draw());
             if (Player.Bust)
             {
-                dealerWinCount++;
-                gamesPlayed++;
                 NewGame();
+                return Result.Dealer;
             }
+            else if (Player.Value == 21)
+            {
+                return Result.Player;
+            }
+            return Result.None;
+
         }
 
-        public void Stand()
+        public Result Stand()
         {
             while (Dealer.Value < 17)
             {
                 Dealer.AddCard(deck.Draw());
             }
             Result winner = Winner();
-            if (winner == Result.Dealer)
-            {
-                dealerWinCount++;
-            }
-            else if (winner == Result.Player)
-            {
-                playerWinCount++;
-            }
-            gamesPlayed++;
             NewGame();
+            return winner;
         }
 
     }

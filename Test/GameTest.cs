@@ -32,19 +32,6 @@ namespace Test
             Assert.That(g.Player.Value, Is.LessThanOrEqualTo(21));
         }
 
-        [Test]
-        public void DrawCard()
-        {
-            g.NewGame();
-            g.HouseDraw();
-            Assert.That(g.Dealer.Size, Is.EqualTo(2));
-            g.HouseDraw();
-            Assert.That(g.Dealer.Size, Is.EqualTo(3));
-            g.PlayerDraw();
-            Assert.That(g.Player.Size, Is.EqualTo(3));
-            g.PlayerDraw();
-            Assert.That(g.Player.Size, Is.EqualTo(4));
-        }
 
         [Test]
         public void DealerHigherValueHand()

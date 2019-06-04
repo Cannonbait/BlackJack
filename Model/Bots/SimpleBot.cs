@@ -8,19 +8,32 @@ namespace Simulation.Bots
     public class SimpleBot : Bot
     {
 
-        public void Play(Blackjack game, int gamesPlayed)
+        public double Play(Blackjack game, int gamesPlayed)
         {
-            while (game.GamesPlayed < gamesPlayed)
+            int totalPlayed = 0;
+            int wins = 0;
+            while (totalPlayed < gamesPlayed)
             {
+                Result res;
                 if (game.PlayerHand.Value < 17)
                 {
-                    game.Hit();
+                    res = game.Hit();
                 }
                 else
                 {
-                    game.Stand();
+                    res = game.Stand();
+                }
+
+                if (res != Result.None)
+                {
+                    totalPlayed++;
+                    if (res == Result.Player)
+                    {
+                        wins++;
+                    }
                 }
             }
+            return (double)wins / totalPlayed * 100;
         }
     }
 }

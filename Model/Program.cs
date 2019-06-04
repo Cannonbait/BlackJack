@@ -10,15 +10,14 @@ namespace Simulation
         static void Main(string[] args)
         {
             Simulate(new SimpleBot());
-            Simulate(new OneLevelMCBot());
+            //Simulate(new OneLevelMCBot());
 
         }
 
         private static void Simulate(Bot bot)
         {
-            Blackjack blackjack = new Game();
-            bot.Play(blackjack, GAMESTOPLAY);
-            Console.WriteLine(string.Format("{0}%", (double)blackjack.PlayerWins / blackjack.GamesPlayed * 100));
+            double winPercentage = bot.Play(new Game(), GAMESTOPLAY);
+            Console.WriteLine(string.Format("{0}%", winPercentage));
         }
     }
 }
