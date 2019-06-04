@@ -46,15 +46,6 @@ namespace Simulation.Core
         }
 
 
-        public bool AddCardBust(Card card)
-        {
-            cards.Add(card);
-            bool bust = Bust;
-            cards.Remove(card);
-            return bust;
-
-        }
-
         public bool HasBlackjack()
         {
             return Size == 2 && Value == 21;

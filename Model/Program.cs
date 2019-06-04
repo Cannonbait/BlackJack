@@ -6,7 +6,7 @@ namespace Simulation
 {
     class Program
     {
-        const int GAMESTOPLAY = 1000;
+        const int GAMESTOPLAY = 10000;
         static void Main(string[] args)
         {
             Simulate(new SimpleBot());

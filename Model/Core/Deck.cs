@@ -37,10 +37,5 @@ namespace Simulation.Core
             cards.RemoveAt(i);
             return c;
         }
-
-        public Card SimulatedDraw()
-        {
-            return cards[rnd.Next(cards.Count)];
-        }
     }
 }
