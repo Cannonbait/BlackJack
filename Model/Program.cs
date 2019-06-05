@@ -4,37 +4,39 @@ using Simulation.Bots;
 
 namespace Simulation
 {
+
     class Program
     {
-        const int GAMESTOPLAY = 100000;
+        const int GAMESTOPLAY = 5000;
         static void Main(string[] args)
         {
+            Simulate(new SimpleBot(13));
             Simulate(new SimpleBot(14));
             Simulate(new SimpleBot(15));
             Simulate(new SimpleBot(16));
-            Simulate(new SimpleBot(17));
-            //Simulate(new MonteCarloBot());
+            Simulate(new IntermediateBot());
+            Simulate(new MonteCarloBot());
 
         }
 
         private static void Simulate(Bot bot)
         {
-            int totalPlayed = 0;
             int wins = 0;
             Game game = new Game();
-            while (totalPlayed < GAMESTOPLAY)
+            game.NewHand();
+            for (int gamesPlayed = 0; gamesPlayed < GAMESTOPLAY; gamesPlayed++)
             {
-                Result res = bot.Play(game);
-                if (res != Result.None)
+                while (!game.HandOver)
                 {
-                    totalPlayed++;
-                    if (res == Result.Player)
-                    {
-                        wins++;
-                    }
+                    bot.Play(game);
                 }
+                if (game.Winner() == Result.Player)
+                {
+                    wins++;
+                }
+                game.NewHand();
             }
-            Console.WriteLine(string.Format("{0}: {1}%", bot.ToString(), (double)wins / totalPlayed * 100));
+            Console.WriteLine(string.Format("{0}: {1}%", bot.ToString(), (double)wins / GAMESTOPLAY * 100));
         }
     }
 }

@@ -6,8 +6,12 @@ namespace Simulation.Core
 {
     public interface IBlackjack
     {
-        Result Hit();
-        Result Stand();
+        void Hit();
+        void Stand();
+
+        Result Winner();
+
+        bool HandOver { get; }
 
         Hand PlayerHand { get; }
 

@@ -23,7 +23,7 @@ namespace Test
         [Test]
         public void HandSizeStartGame()
         {
-            g.NewGame();
+            g.NewHand();
             Assert.That(g.DealerHand.Size, Is.EqualTo(1));
             Assert.That(g.PlayerHand.Size, Is.EqualTo(2));
             Assert.That(g.DealerHand.Value, Is.LessThan(12));

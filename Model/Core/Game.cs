@@ -10,6 +10,8 @@ namespace Simulation.Core
     {
         private Deck deck = new Deck();
 
+        public bool HandOver { get; private set; } = false;
+
 
 
         private Hand Dealer { get; } = new Hand();
@@ -19,27 +21,29 @@ namespace Simulation.Core
         public Hand PlayerHand => (Hand)Player.Clone();
         public Hand DealerHand => (Hand)Dealer.Clone();
 
-        public Deck Deck => deck;
+        public Deck Deck => (Deck)deck.Clone();
 
         public Game()
         {
-            NewGame();
+            NewHand();
         }
 
-        public Game(Hand dealer, Hand player, Deck deck)
+        public Game(Game game)
         {
-            Dealer = dealer;
-            Player = player;
-            this.deck = deck;
+            Dealer = game.DealerHand;
+            Player = game.PlayerHand;
+            deck = game.Deck;
+            HandOver = game.HandOver;
         }
 
-        public void NewGame()
+        public void NewHand()
         {
             Dealer.Clear();
             Player.Clear();
             Dealer.AddCard(deck.Draw());
             Player.AddCard(deck.Draw());
             Player.AddCard(deck.Draw());
+            HandOver = false;
         }
 
         public void PlayerDraw()
@@ -96,37 +100,28 @@ namespace Simulation.Core
             }
         }
 
-        public Result Hit()
+        public void Hit()
         {
             PlayerDraw();
-            if (Player.Bust)
+            if (PlayerHand.Value > 21)
             {
-                NewGame();
-                return Result.Dealer;
+                HandOver = true;
             }
-            else if (Player.Value == 21)
-            {
-                NewGame();
-                return Result.Player;
-            }
-            return Result.None;
-
         }
 
-        public Result Stand()
+        public void Stand()
         {
             while (Dealer.Value < 17)
             {
                 DealerDraw();
             }
-            Result winner = Winner();
-            NewGame();
-            return winner;
+            HandOver = true;
+
         }
 
-        public object Clone()
+        public Object Clone()
         {
-            return new Game((Hand)Dealer.Clone(), (Hand)Player.Clone(), (Deck)deck.Clone());
+            return new Game(this);
         }
     }
 }

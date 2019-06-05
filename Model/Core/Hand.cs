@@ -12,12 +12,12 @@ namespace Simulation.Core
 
         }
 
-        public Hand(HashSet<Card> cards)
+        public Hand(List<Card> cards)
         {
             this.cards = cards;
         }
 
-        private HashSet<Card> cards = new HashSet<Card>();
+        private List<Card> cards = new List<Card>();
         public void AddCard(Card c)
         {
             cards.Add(c);
@@ -63,9 +63,19 @@ namespace Simulation.Core
 
         public object Clone()
         {
-            return new Hand(new HashSet<Card>(cards));
+            return new Hand(new List<Card>(cards));
         }
 
-        public HashSet<Card> Cards => cards;
+        public List<Card> Cards => cards;
+
+        public override string ToString()
+        {
+            string str = "";
+            foreach (Card c in cards)
+            {
+                str += c.Rank + " ";
+            }
+            return str;
+        }
     }
 }

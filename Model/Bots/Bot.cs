@@ -7,6 +7,6 @@ namespace Simulation.Bots
 {
     public interface Bot
     {
-        Result Play(IBlackjack game);
+        void Play(IBlackjack game);
     }
 }

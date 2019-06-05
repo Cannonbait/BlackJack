@@ -8,22 +8,26 @@ namespace Simulation.Bots
     class IntermediateBot : Bot
 
     {
-        public Result Play(IBlackjack game)
+        public void Play(IBlackjack game)
         {
             int houseVal = game.DealerHand.Value;
             if (houseVal <= 6 && game.PlayerHand.Value > 11)
             {
-                return game.Stand();
+                game.Stand();
             }
             else if (houseVal <= 7 && game.PlayerHand.Value <= 11)
             {
-                return game.Hit();
+                game.Hit();
             }
             else if (houseVal >= 7 && game.PlayerHand.Value <= houseVal + 10)
             {
-                return game.Hit();
+                game.Hit();
             }
-            return game.Stand();
+            else
+            {
+                game.Stand();
+
+            }
         }
     }
 }

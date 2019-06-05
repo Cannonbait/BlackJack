@@ -13,15 +13,16 @@ namespace Simulation.Bots
             this.hitBelow = hitBelow;
         }
 
-        public Result Play(IBlackjack game)
+        public void Play(IBlackjack game)
         {
             if (game.PlayerHand.Value < hitBelow)
             {
-                return game.Hit();
+                game.Hit();
+
             }
             else
             {
-                return game.Stand();
+                game.Stand();
             }
         }
 
