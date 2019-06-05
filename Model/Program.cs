@@ -7,15 +7,15 @@ namespace Simulation
 
     class Program
     {
-        const int GAMESTOPLAY = 5000;
+        const int GAMESTOPLAY = 10000;
         static void Main(string[] args)
         {
-            Simulate(new SimpleBot(13));
-            Simulate(new SimpleBot(14));
-            Simulate(new SimpleBot(15));
-            Simulate(new SimpleBot(16));
-            Simulate(new IntermediateBot());
-            Simulate(new MonteCarloBot());
+            //Simulate(new SimpleBot(13));
+            //Simulate(new SimpleBot(14));
+            //Simulate(new SimpleBot(15));
+            //Simulate(new SimpleBot(16));
+            //Simulate(new IntermediateBot());
+            Simulate(new MonteCarloBot(200, 3));
 
         }
 
