@@ -7,7 +7,7 @@ namespace Simulation.Bots
 {
     class MonteCarloBot : Bot
     {
-        private const int TRIALS = 10;
+        private const int TRIALS = 100;
         public static double Simulate(IBlackjack game, int playerDraws)
         {
             int wins = 0;
@@ -29,28 +29,22 @@ namespace Simulation.Bots
 
         public Result Play(IBlackjack game)
         {
-            int bestDraw = 0;
-            double bestPercentage = 0.0;
-            for (int i = 0; i < 3; i++)
-            {
-                double result = Simulate((Game)game.Clone(), i);
-                if (result > bestPercentage)
-                {
-                    bestDraw = i;
-                    bestPercentage = result;
-                }
-            }
-            List<Card> cards = new List<Card>(game.PlayerHand.Cards);
-            for (int i = 0; i < bestDraw; i++)
-            {
-                Result res = game.Hit();
-                if (res == Result.Player || res == Result.Dealer)
-                {
-                    return res;
-                }
-            }
+            //Find out if drawing any number of cards has better winchance than drawing 0 cards
+            double winZero = Simulate(game, 0);
 
+            for (int currentDraw = 0; currentDraw < 1; currentDraw++)
+            {
+                if (Simulate((Game)game.Clone(), currentDraw) > winZero)
+                {
+                    return game.Hit();
+                }
+            }
             return game.Stand();
+        }
+
+        public override string ToString()
+        {
+            return "MonteCarloBot";
         }
     }
 }
