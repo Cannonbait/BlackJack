@@ -35,16 +35,11 @@ namespace Simulation.Core
 
         public void NewGame()
         {
-            deck.ResetDeck();
-            //if (deck.Size < 10)
-            //{
-            //}
             Dealer.Clear();
             Player.Clear();
             Dealer.AddCard(deck.Draw());
             Player.AddCard(deck.Draw());
             Player.AddCard(deck.Draw());
-
         }
 
         public void PlayerDraw()
