@@ -7,10 +7,15 @@ namespace Simulation.Bots
 {
     public class SimpleBot : Bot
     {
+        private int hitBelow;
+        public SimpleBot(int hitBelow)
+        {
+            this.hitBelow = hitBelow;
+        }
 
         public Result Play(IBlackjack game)
         {
-            if (game.PlayerHand.Value < 17)
+            if (game.PlayerHand.Value < hitBelow)
             {
                 return game.Hit();
             }
@@ -18,8 +23,11 @@ namespace Simulation.Bots
             {
                 return game.Stand();
             }
+        }
 
-
+        public override string ToString()
+        {
+            return String.Format("SimpleBot({0})", hitBelow);
         }
     }
 }

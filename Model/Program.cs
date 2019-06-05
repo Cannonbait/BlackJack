@@ -6,11 +6,14 @@ namespace Simulation
 {
     class Program
     {
-        const int GAMESTOPLAY = 10000;
+        const int GAMESTOPLAY = 100000;
         static void Main(string[] args)
         {
-            Simulate(new SimpleBot());
-            Simulate(new MonteCarloBot());
+            Simulate(new SimpleBot(14));
+            Simulate(new SimpleBot(15));
+            Simulate(new SimpleBot(16));
+            Simulate(new SimpleBot(17));
+            //Simulate(new MonteCarloBot());
 
         }
 
@@ -31,7 +34,7 @@ namespace Simulation
                     }
                 }
             }
-            Console.WriteLine(string.Format("{0}%", (double)wins / totalPlayed * 100));
+            Console.WriteLine(string.Format("{0}: {1}%", bot.ToString(), (double)wins / totalPlayed * 100));
         }
     }
 }
