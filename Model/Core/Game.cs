@@ -10,13 +10,16 @@ namespace Simulation.Core
     {
         private Deck deck = new Deck();
 
-        public bool HandOver { get; private set; } = false;
+        public bool HandOver { get; private set; } = true;
 
 
 
         private Hand Dealer { get; } = new Hand();
         private Hand Player { get; } = new Hand();
 
+        public int Money { get; private set; } = 0;
+
+        public int BetSize { get; private set; } = 1;
 
 
         public Hand PlayerHand => (Hand)Player.Clone();
@@ -39,12 +42,21 @@ namespace Simulation.Core
 
         public void NewHand()
         {
+            HandOver = false;
+            Money -= BetSize;
             Dealer.Clear();
             Player.Clear();
             Dealer.AddCard(deck.Draw());
             Player.AddCard(deck.Draw());
             Player.AddCard(deck.Draw());
-            HandOver = false;
+        }
+
+        public void SetBet(int betSize)
+        {
+            if (HandOver == true)
+            {
+                BetSize = betSize;
+            }
         }
 
         public void PlayerDraw()
@@ -117,7 +129,28 @@ namespace Simulation.Core
                 DealerDraw();
             }
             HandOver = true;
+        }
 
+        public void DoubleDown()
+        {
+            Money -= BetSize;
+            BetSize = BetSize * 2;
+            Hit();
+            Stand();
+        }
+
+        public void FinishHand()
+        {
+            Result result = Winner();
+            if (result == Result.Player)
+            {
+                Money += (BetSize * 2);
+            }
+            else if (result == Result.Tie)
+            {
+                Money += BetSize;
+            }
+            HandOver = true;
         }
 
         public Object Clone()

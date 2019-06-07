@@ -9,6 +9,10 @@ namespace Simulation.Core
         void Hit();
         void Stand();
 
+        void DoubleDown();
+
+        void SetBet(int bet);
+
         Result Winner();
 
         bool HandOver { get; }
