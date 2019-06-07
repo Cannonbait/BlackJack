@@ -36,7 +36,7 @@ namespace Simulation
                 }
                 game.NewHand();
             }
-            Console.WriteLine(string.Format("{0}: {1}%", bot.ToString(), (double)wins / GAMESTOPLAY * 100));
+            Console.WriteLine(string.Format("{0}\t Winrate: {1}%", bot.ToString(), (double)wins / GAMESTOPLAY * 100));
         }
     }
 }
