@@ -18,6 +18,7 @@ namespace Simulation.Core
         private Hand Player { get; } = new Hand();
 
 
+
         public Hand PlayerHand => (Hand)Player.Clone();
         public Hand DealerHand => (Hand)Dealer.Clone();
 
@@ -86,7 +87,7 @@ namespace Simulation.Core
             {
                 return Result.Player;
             }
-            else if (Dealer.HasBlackjack() && Player.HasBlackjack())
+            else if (Dealer.HasBlackjack() && Player.HasBlackjack() || Dealer.Value == Player.Value && !Dealer.HasBlackjack() && !Player.HasBlackjack())
             {
                 return Result.Tie;
             }

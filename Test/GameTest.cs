@@ -145,5 +145,20 @@ namespace Test
             g.PlayerDraw(c5);
             Assert.That(g.Winner(), Is.EqualTo(Result.Player));
         }
+
+        [Test]
+        public void Tie18()
+        {
+            g.ClearHands();
+            Card c1 = new Card(CardSuit.Hearts, CardRank.Jack);
+            Card c2 = new Card(CardSuit.Hearts, CardRank.Eight);
+            g.DealerDraw(c1);
+            g.DealerDraw(c2);
+            Card c4 = new Card(CardSuit.Clubs, CardRank.Ace);
+            Card c5 = new Card(CardSuit.Clubs, CardRank.Seven);
+            g.PlayerDraw(c4);
+            g.PlayerDraw(c5);
+            Assert.That(g.Winner(), Is.EqualTo(Result.Tie));
+        }
     }
 }
