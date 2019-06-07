@@ -20,5 +20,16 @@ namespace Tests
             Card c2 = new Card(CardSuit.Clubs, CardRank.Ace);
             Assert.That(c1.Equals(c2));
         }
+
+        [Test]
+        public void NotEqual()
+        {
+            Card c1 = new Card(CardSuit.Clubs, CardRank.Queen);
+            Card c2 = new Card(CardSuit.Clubs, CardRank.Ace);
+            Assert.That(!c1.Equals(c2));
+            c1 = new Card(CardSuit.Clubs, CardRank.Ace);
+            c2 = new Card(CardSuit.Hearts, CardRank.Ace);
+            Assert.That(!c1.Equals(c2));
+        }
     }
 }
