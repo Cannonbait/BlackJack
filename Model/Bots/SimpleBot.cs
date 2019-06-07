@@ -26,6 +26,11 @@ namespace Simulation.Bots
             }
         }
 
+        public int SetBet(IBlackjack game)
+        {
+            return 1;
+        }
+
         public override string ToString()
         {
             return String.Format("SimpleBot({0})", hitBelow);

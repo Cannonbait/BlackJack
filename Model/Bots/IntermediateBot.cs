@@ -29,5 +29,10 @@ namespace Simulation.Bots
 
             }
         }
+
+        public int SetBet(IBlackjack game)
+        {
+            return 10;
+        }
     }
 }

@@ -52,6 +52,11 @@ namespace Simulation.Bots
             for (int currentDraw = 1; currentDraw < maxDraw; currentDraw++)
             {
                 winDraw += Simulate((Game)game.Clone(), currentDraw);
+                if (currentDraw == 1 && winDraw > winZero)
+                {
+                    game.DoubleDown();
+                    return;
+                }
                 if (winDraw > winZero)
                 {
                     game.Hit();
@@ -64,6 +69,11 @@ namespace Simulation.Bots
         public override string ToString()
         {
             return "MonteCarloBot:" + "\tTrials: " + trials + "\tMaxDraw: " + maxDraw;
+        }
+
+        public int SetBet(IBlackjack game)
+        {
+            return 1;
         }
     }
 }

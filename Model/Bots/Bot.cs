@@ -8,5 +8,7 @@ namespace Simulation.Bots
     public interface Bot
     {
         void Play(IBlackjack game);
+
+        int SetBet(IBlackjack game);
     }
 }
