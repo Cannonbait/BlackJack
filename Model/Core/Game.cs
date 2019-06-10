@@ -22,11 +22,11 @@ namespace Simulation.Core
         public int BetSize { get; private set; } = 1;
 
 
-        public Hand PlayerHand => (Hand)Player.Clone();
+        public Hand PlayerHand => Player;
 
-        public Hand DealerHand => (Hand)Dealer.Clone();
+        public Hand DealerHand => Dealer;
 
-        public Deck Deck => (Deck)deck.Clone();
+        public Deck Deck => deck;
 
         public Game()
         {
@@ -34,9 +34,9 @@ namespace Simulation.Core
 
         public Game(Game game)
         {
-            Dealer = game.DealerHand;
-            Player = game.PlayerHand;
-            deck = game.Deck;
+            Dealer = (Hand)game.DealerHand.Clone();
+            Player = (Hand)game.PlayerHand.Clone();
+            deck = (Deck)game.Deck.Clone();
             HandOver = game.HandOver;
         }
 

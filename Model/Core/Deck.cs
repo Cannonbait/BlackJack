@@ -46,11 +46,7 @@ namespace Simulation.Core
         public void ResetDeck()
         {
             cards.Clear();
-            foreach (Card c in completeDeck)
-            {
-                cards.Add(c);
-            }
-
+            cards = new List<Card>(completeDeck);
         }
 
         public Card Draw()

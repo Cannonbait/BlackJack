@@ -9,21 +9,22 @@ namespace Simulation.Bots
     {
         private int trials;
         private int maxDraw;
+        private double doubleDown;
 
-        public MonteCarloBot() : this(200, 2) { }
+        public MonteCarloBot() : this(200, 2, 0.5) { }
 
-        public MonteCarloBot(int trials, int maxDraw)
+        public MonteCarloBot(int trials, int maxDraw, double doubleDown)
         {
             this.trials = trials;
             this.maxDraw = maxDraw;
+            this.doubleDown = doubleDown;
         }
         public double Simulate(IBlackjack game, int playerDraws)
         {
             int wins = 0;
             for (int i = 0; i < trials; i++)
             {
-                Game simGame = (Game)game.Clone();
-                if (SimulateHand((Game)game.Clone(), playerDraws) == Result.Player)
+                if (SimulateHand(game, playerDraws) == Result.Player)
                 {
                     wins++;
                 }
@@ -52,11 +53,11 @@ namespace Simulation.Bots
             for (int currentDraw = 1; currentDraw < maxDraw; currentDraw++)
             {
                 winDraw += Simulate((Game)game.Clone(), currentDraw);
-                //if (currentDraw == 1 && winDraw > 0.5)
-                //{
-                //    game.DoubleDown();
-                //    return;
-                //}
+                if (currentDraw == 1 && winDraw > doubleDown)
+                {
+                    game.DoubleDown();
+                    return;
+                }
                 if (winDraw > winZero)
                 {
                     game.Hit();
