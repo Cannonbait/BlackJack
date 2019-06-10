@@ -52,11 +52,11 @@ namespace Simulation.Bots
             for (int currentDraw = 1; currentDraw < maxDraw; currentDraw++)
             {
                 winDraw += Simulate((Game)game.Clone(), currentDraw);
-                if (currentDraw == 1 && winDraw > winZero)
-                {
-                    game.DoubleDown();
-                    return;
-                }
+                //if (currentDraw == 1 && winDraw > 0.5)
+                //{
+                //    game.DoubleDown();
+                //    return;
+                //}
                 if (winDraw > winZero)
                 {
                     game.Hit();
