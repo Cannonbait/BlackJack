@@ -16,8 +16,8 @@ namespace Test
         [Test]
         public void HandSizeInitial()
         {
-            Assert.That(g.DealerHand.Size, Is.EqualTo(1));
-            Assert.That(g.PlayerHand.Size, Is.EqualTo(2));
+            Assert.That(g.DealerHand.Size, Is.EqualTo(0));
+            Assert.That(g.PlayerHand.Size, Is.EqualTo(0));
         }
 
         [Test]
