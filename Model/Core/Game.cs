@@ -23,13 +23,13 @@ namespace Simulation.Core
 
 
         public Hand PlayerHand => (Hand)Player.Clone();
+
         public Hand DealerHand => (Hand)Dealer.Clone();
 
         public Deck Deck => (Deck)deck.Clone();
 
         public Game()
         {
-            NewHand();
         }
 
         public Game(Game game)

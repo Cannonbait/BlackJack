@@ -7,12 +7,12 @@ namespace Simulation
 
     class Program
     {
-        const int GAMESTOPLAY = 10000;
+        const int GAMESTOPLAY = 1000;
         static void Main(string[] args)
         {
             //Simulate(new SimpleBot(13));
             //Simulate(new SimpleBot(14));
-            //Simulate(new SimpleBot(15));
+            Simulate(new SimpleBot(15));
             //Simulate(new SimpleBot(16));
             //Simulate(new IntermediateBot());
             Simulate(new MonteCarloBot(200, 3));
@@ -21,22 +21,18 @@ namespace Simulation
 
         private static void Simulate(Bot bot)
         {
-            int wins = 0;
             Game game = new Game();
-            game.NewHand();
             for (int gamesPlayed = 0; gamesPlayed < GAMESTOPLAY; gamesPlayed++)
             {
+                game.NewHand();
                 while (!game.HandOver)
                 {
                     bot.Play(game);
                 }
-                if (game.Winner() == Result.Player)
-                {
-                    wins++;
-                }
-                game.NewHand();
+                game.FinishHand();
+                game.SetBet(bot.SetBet(game));
             }
-            Console.WriteLine(string.Format("{0}\t Winrate: {1}%", bot.ToString(), (double)wins / GAMESTOPLAY * 100));
+            Console.WriteLine(string.Format("{0}\t Money: {1}", bot.ToString(), game.Money));
         }
     }
 }
