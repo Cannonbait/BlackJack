@@ -8,7 +8,7 @@ namespace Simulation.Core
 
     public class Game : IBlackjack, ICloneable
     {
-        private Deck deck = new Deck();
+        public Deck Deck { get; private set; }
 
         public bool HandOver { get; private set; } = true;
 
@@ -21,23 +21,27 @@ namespace Simulation.Core
 
         public int BetSize { get; private set; } = 1;
 
+        public Random Rng { get; private set; }
+
 
         public Hand PlayerHand => Player;
 
         public Hand DealerHand => Dealer;
 
-        public Deck Deck => deck;
 
-        public Game()
+        public Game(Random rng)
         {
+            this.Rng = rng;
+            Deck = new Deck(Rng);
         }
 
         public Game(Game game)
         {
             Dealer = (Hand)game.DealerHand.Clone();
             Player = (Hand)game.PlayerHand.Clone();
-            deck = (Deck)game.Deck.Clone();
+            Deck = (Deck)game.Deck.Clone();
             HandOver = game.HandOver;
+            this.Rng = game.Rng;
         }
 
         public void NewHand()
@@ -46,9 +50,9 @@ namespace Simulation.Core
             Money -= BetSize;
             Dealer.Clear();
             Player.Clear();
-            Dealer.AddCard(deck.Draw());
-            Player.AddCard(deck.Draw());
-            Player.AddCard(deck.Draw());
+            Dealer.AddCard(Deck.Draw());
+            Player.AddCard(Deck.Draw());
+            Player.AddCard(Deck.Draw());
         }
 
         public void SetBet(int betSize)

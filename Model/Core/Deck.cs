@@ -10,20 +10,20 @@ namespace Simulation.Core
     {
         List<Card> cards = new List<Card>();
         static List<Card> completeDeck = new List<Card>();
-        private readonly static Random rnd = new Random();
+        private readonly Random rng;
 
-        public Deck()
+        public Deck(Random rng)
         {
-
+            this.rng = rng;
             GenerateCompleteDeck();
             ResetDeck();
-
         }
 
-        public Deck(List<Card> cards)
+        public Deck(List<Card> cards, Random rng)
         {
             GenerateCompleteDeck();
             this.cards = cards;
+            this.rng = rng;
         }
 
         private void GenerateCompleteDeck()
@@ -55,7 +55,7 @@ namespace Simulation.Core
             {
                 ResetDeck();
             }
-            int i = rnd.Next(cards.Count);
+            int i = rng.Next(cards.Count);
             Card c = cards[i];
             cards.RemoveAt(i);
             return c;
@@ -63,7 +63,7 @@ namespace Simulation.Core
 
         public object Clone()
         {
-            return new Deck(new List<Card>(cards));
+            return new Deck(new List<Card>(cards), rng);
         }
 
         public void Remove(Card c)

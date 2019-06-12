@@ -11,7 +11,7 @@ namespace Test
         [SetUp]
         public void Setup()
         {
-            g = new Game();
+            g = new Game(new Random());
         }
         [Test]
         public void HandSizeInitial()
