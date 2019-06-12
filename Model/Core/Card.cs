@@ -11,10 +11,14 @@ namespace Simulation.Core
         public CardSuit Suit { get; }
         public CardRank Rank { get; }
 
+        public int Value { get; }
+
         public Card(CardSuit suit, CardRank rank)
         {
             this.Suit = suit;
             this.Rank = rank;
+            this.Value = CalculateValue();
+
         }
 
         public override int GetHashCode()
@@ -36,24 +40,21 @@ namespace Simulation.Core
             }
         }
 
-        public int Value
+        private int CalculateValue()
         {
-            get
+            if (Rank == CardRank.Ace)
             {
-                if (Rank == CardRank.Ace)
-                {
-                    return 11;
-                }
-                else if (Rank == CardRank.Jack || Rank == CardRank.Queen || Rank == CardRank.King)
-                {
-                    return 10;
-                }
-                else
-                {
-                    return (int)Rank;
-                }
-
+                return 11;
             }
+            else if (Rank == CardRank.Jack || Rank == CardRank.Queen || Rank == CardRank.King)
+            {
+                return 10;
+            }
+            else
+            {
+                return (int)Rank;
+            }
+
         }
     }
 }
