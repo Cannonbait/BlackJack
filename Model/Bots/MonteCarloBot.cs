@@ -24,7 +24,7 @@ namespace Simulation.Bots
             int wins = 0;
             for (int i = 0; i < trials; i++)
             {
-                if (SimulateHand(game, playerDraws) == Result.Player)
+                if (SimulateHand((Game)game.Clone(), playerDraws) == Result.Player)
                 {
                     wins++;
                 }
@@ -52,7 +52,7 @@ namespace Simulation.Bots
 
             for (int currentDraw = 1; currentDraw < maxDraw; currentDraw++)
             {
-                winDraw += Simulate((Game)game.Clone(), currentDraw);
+                winDraw += Simulate(game, currentDraw);
                 if (currentDraw == 1 && winDraw > doubleDown)
                 {
                     game.DoubleDown();
@@ -69,7 +69,7 @@ namespace Simulation.Bots
 
         public override string ToString()
         {
-            return "MonteCarloBot:" + "\tTrials: " + trials + "\tMaxDraw: " + maxDraw;
+            return "MonteCarloBot:" + "\tTrials: " + trials + "\tMaxDraw: " + maxDraw + "\tDoubleDown: " + doubleDown;
         }
 
         public int SetBet(IBlackjack game)
