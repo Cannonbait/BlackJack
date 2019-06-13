@@ -8,7 +8,7 @@ namespace Simulation.Core
 
     public class Deck : ICloneable
     {
-        List<Card> cards = new List<Card>();
+        public List<Card> Cards { get; private set; } = new List<Card>();
         static List<Card> completeDeck = new List<Card>();
         private readonly Random rng;
 
@@ -22,7 +22,7 @@ namespace Simulation.Core
         public Deck(List<Card> cards, Random rng)
         {
             GenerateCompleteDeck();
-            this.cards = cards;
+            this.Cards = cards;
             this.rng = rng;
         }
 
@@ -41,12 +41,12 @@ namespace Simulation.Core
             }
         }
 
-        public int Size => cards.Count;
+        public int Size => Cards.Count;
 
         public void ResetDeck()
         {
-            cards.Clear();
-            cards = new List<Card>(completeDeck);
+            Cards.Clear();
+            Cards = new List<Card>(completeDeck);
         }
 
         public Card Draw()
@@ -55,20 +55,20 @@ namespace Simulation.Core
             {
                 ResetDeck();
             }
-            int i = rng.Next(cards.Count);
-            Card c = cards[i];
-            cards.RemoveAt(i);
+            int i = rng.Next(Cards.Count);
+            Card c = Cards[i];
+            Cards.RemoveAt(i);
             return c;
         }
 
         public object Clone()
         {
-            return new Deck(new List<Card>(cards), rng);
+            return new Deck(new List<Card>(Cards), rng);
         }
 
         public void Remove(Card c)
         {
-            cards.Remove(c);
+            Cards.Remove(c);
         }
     }
 }

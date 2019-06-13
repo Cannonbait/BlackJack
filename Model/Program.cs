@@ -10,26 +10,36 @@ namespace Simulation
 
     class Program
     {
-        const int GAMESTOPLAY = 50000;
+        const int GAMESTOPLAY = 1;
 
         static void Main(string[] args)
         {
-            Random rnd = new Random();
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            Simulate(new MonteCarloBot(100, 3, 0.5), 0, rnd.Next());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            BlackjackGame game = new BlackjackGame();
+            for (int i = 0; i < 13; i++)
+            {
+                Console.WriteLine(game.Draw());
 
-            Task[] taskArray = new Task[4];
-            taskArray[0] = new Task(() => Simulate(new MonteCarloBot(100, 3, 0.5), 0, rnd.Next()));
-            taskArray[1] = new Task(() => Simulate(new MonteCarloBot(200, 3, 0.5), 0, rnd.Next()));
-            taskArray[2] = new Task(() => Simulate(new MonteCarloBot(400, 3, 0.5), 0, rnd.Next()));
-            taskArray[3] = new Task(() => Simulate(new MonteCarloBot(800, 3, 0.5), 0, rnd.Next()));
-            taskArray[0].Start();
-            taskArray[1].Start();
-            taskArray[2].Start();
-            taskArray[3].Start();
-            Task.WaitAll(taskArray);
+            }
+
+
+
+
+            //Random rnd = new Random();
+            //Stopwatch stopwatch = Stopwatch.StartNew();
+            //Simulate(new StatisticBot(), 0, rnd.Next());
+            //stopwatch.Stop();
+            //Console.WriteLine(stopwatch.ElapsedMilliseconds);
+
+            //Task[] taskArray = new Task[4];
+            //taskArray[0] = new Task(() => Simulate(new MonteCarloBot(100, 3, 0.5), 0, rnd.Next()));
+            //taskArray[1] = new Task(() => Simulate(new MonteCarloBot(100, 4, 0.5), 0, rnd.Next()));
+            //taskArray[2] = new Task(() => Simulate(new MonteCarloBot(200, 3, 0.5), 0, rnd.Next()));
+            //taskArray[3] = new Task(() => Simulate(new MonteCarloBot(200, 4, 0.5), 0, rnd.Next()));
+            //taskArray[0].Start();
+            //taskArray[1].Start();
+            //taskArray[2].Start();
+            //taskArray[3].Start();
+            //Task.WaitAll(taskArray);
 
 
             //Simulate(new SimpleBot(13));
@@ -52,7 +62,7 @@ namespace Simulation
                 }
                 game.FinishHand();
             }
-            Console.WriteLine(string.Format("{0}\t Money: {1}", bot.ToString(), game.Money));
+            Console.WriteLine(string.Format("{0}\t Money: {1} \t Percent: {2}", bot.ToString(), game.Money, (game.Money + GAMESTOPLAY) / (GAMESTOPLAY * 2.0) * 100));
         }
     }
 }
