@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Simulation.Core;
+using Simulation.Core2;
 
 namespace Simulation.Bots
 {
@@ -11,9 +11,8 @@ namespace Simulation.Bots
         private int maxDraw;
         private double doubleDown;
 
-        public MonteCarloBot() : this(200, 2, 0.5) { }
 
-        public MonteCarloBot(int trials, int maxDraw, double doubleDown)
+        public MonteCarloBot(int trials = 200, int maxDraw = 3, double doubleDown = 0.5)
         {
             this.trials = trials;
             this.maxDraw = maxDraw;
@@ -22,9 +21,11 @@ namespace Simulation.Bots
         public double Simulate(IBlackjack game, int playerDraws)
         {
             int wins = 0;
+            game.SetState();
             for (int i = 0; i < trials; i++)
             {
-                if (SimulateHand((Game)game.Clone(), playerDraws) == Result.Player)
+                game.RestoreState();
+                if (SimulateHand(game, playerDraws) == Result.Player)
                 {
                     wins++;
                 }
@@ -72,7 +73,7 @@ namespace Simulation.Bots
             return "MonteCarloBot:" + "\tTrials: " + trials + "\tMaxDraw: " + maxDraw + "\tDoubleDown: " + doubleDown;
         }
 
-        public int SetBet(IBlackjack game)
+        public int GetBet(IBlackjack game)
         {
             return 1;
         }

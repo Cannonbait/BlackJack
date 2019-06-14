@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Simulation.Core;
+using Simulation.Core2;
 
 namespace Simulation.Bots
 {
@@ -15,7 +15,7 @@ namespace Simulation.Bots
 
         public void Play(IBlackjack game)
         {
-            if (game.PlayerHand.Value < hitBelow)
+            if (game.Player.Value < hitBelow)
             {
                 game.Hit();
 
@@ -26,7 +26,7 @@ namespace Simulation.Bots
             }
         }
 
-        public int SetBet(IBlackjack game)
+        public int GetBet(IBlackjack game)
         {
             return 1;
         }

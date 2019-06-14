@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simulation.Core;
+using Simulation.Core2;
 
 namespace Simulation.Bots
 {
@@ -10,47 +10,47 @@ namespace Simulation.Bots
     {
         public void Play(IBlackjack game)
         {
-            Console.WriteLine(game.PlayerHand);
-            Console.WriteLine(game.DealerHand);
+            Console.WriteLine(game.Player);
+            Console.WriteLine(game.Dealer);
             Deck deck = game.Deck;
-            Dictionary<int, int> count = ProbabilitiesDraw(deck);
-            foreach (int val in count.Keys)
-            {
-                Console.Write("(" + val + "," + count[val] + "), ");
-            }
-            Console.WriteLine();
+            //Dictionary<int, int> count = ProbabilitiesDraw(deck);
+            //foreach (int val in count.Keys)
+            //{
+            //    Console.Write("(" + val + "," + count[val] + "), ");
+            //}
+            //Console.WriteLine();
             game.Hit();
         }
 
 
-        private List<(List<int>, int)> DrawAnother(Deck deck, List<(List<int>, int)> drawn)
-        {
-            foreach ((List<int>, int) scenario in drawn)
-            {
+        //private List<(List<int>, int)> DrawAnother(Deck deck, List<(List<int>, int)> drawn)
+        //{
+        //    foreach ((List<int>, int) scenario in drawn)
+        //    {
 
-            }
-            return null;
+        //    }
+        //    return null;
 
-        }
+        //}
 
-        private Dictionary<int, int> ProbabilitiesDraw(Deck deck, List<int> drawn = null)
-        {
-            Dictionary<int, int> cards = deck.Cards.GroupBy(x => x.Value).ToDictionary(x => (int)x.Key, x => x.Count());
+        //private Dictionary<int, int> ProbabilitiesDraw(Deck deck, List<int> drawn = null)
+        //{
+        //    Dictionary<int, int> cards = deck.Cards.GroupBy(x => x.Value).ToDictionary(x => (int)x.Key, x => x.Count());
 
-            if (drawn != null)
-            {
-                foreach (int value in drawn)
-                {
-                    cards[value] -= 1;
-                }
-            }
-            return cards;
-        }
-
-
+        //    if (drawn != null)
+        //    {
+        //        foreach (int value in drawn)
+        //        {
+        //            cards[value] -= 1;
+        //        }
+        //    }
+        //    return cards;
+        //}
 
 
-        public int SetBet(IBlackjack game)
+
+
+        public int GetBet(IBlackjack game)
         {
             return 1;
         }

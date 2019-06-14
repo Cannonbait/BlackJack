@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Simulation.Core;
+using Simulation.Core2;
 
 namespace Simulation.Bots
 {
@@ -9,6 +9,6 @@ namespace Simulation.Bots
     {
         void Play(IBlackjack game);
 
-        int SetBet(IBlackjack game);
+        int GetBet(IBlackjack game);
     }
 }

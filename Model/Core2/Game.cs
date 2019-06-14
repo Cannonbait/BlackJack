@@ -6,7 +6,7 @@ namespace Simulation.Core2
 {
     public enum Result { Dealer, Player, Tie, None };
 
-    public class Game
+    public class Game : IBlackjack, IState
     {
         public Deck Deck { get; private set; }
 
@@ -32,8 +32,8 @@ namespace Simulation.Core2
 
         public Game(Game game)
         {
-            Dealer = game.Dealer.Clone();
-            Player = game.Player.Clone();
+            Dealer = new Hand(game.Dealer);
+            Player = new Hand(game.Player);
             Deck = new Deck(game.Deck);
             HandOver = game.HandOver;
             this.Rng = game.Rng;
@@ -45,6 +45,7 @@ namespace Simulation.Core2
             Money -= BetSize;
             Dealer.Clear();
             Player.Clear();
+            Deck.ResetDeck();
             Dealer.AddCard(Deck.Draw());
             Player.AddCard(Deck.Draw());
             Player.AddCard(Deck.Draw());
@@ -88,7 +89,7 @@ namespace Simulation.Core2
             {
                 return Result.Player;
             }
-            else if (Dealer.HasBlackjack() && Player.HasBlackjack() || Dealer.Value == Player.Value && !Dealer.HasBlackjack() && !Player.HasBlackjack())
+            else if (Dealer.Value == Player.Value && Dealer.HasBlackjack() == Player.HasBlackjack())
             {
                 return Result.Tie;
             }
@@ -142,5 +143,18 @@ namespace Simulation.Core2
             HandOver = true;
         }
 
+        public void SetState()
+        {
+            Player.SetState();
+            Dealer.SetState();
+            Deck.SetState();
+        }
+
+        public void RestoreState()
+        {
+            Player.RestoreState();
+            Dealer.RestoreState();
+            Deck.RestoreState();
+        }
     }
 }

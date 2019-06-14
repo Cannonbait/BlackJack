@@ -5,10 +5,14 @@ using System.Text;
 namespace Simulation.Core2
 {
 
-    class Deck
+    public class Deck : IState
     {
         private static readonly List<int> deckValues = new List<int>(new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11 });
-        public List<int> cards { get; private set; }
+        public List<int> Cards { get; private set; }
+
+        private int stateDeckSize;
+
+
 
         private int deckSize;
 
@@ -18,12 +22,12 @@ namespace Simulation.Core2
         {
             this.rnd = rnd;
             deckSize = deckValues.Count * numDecks * 4;
-            cards = new List<int>(deckSize);
+            Cards = new List<int>(deckSize);
             for (int i = 0; i < numDecks * 4; i++)
             {
                 foreach (int value in deckValues)
                 {
-                    cards.Add(value);
+                    Cards.Add(value);
                 }
             }
         }
@@ -32,27 +36,35 @@ namespace Simulation.Core2
         {
             this.rnd = deck.rnd;
             this.deckSize = deck.deckSize;
-            this.cards = deck.cards;
+            this.Cards = deck.Cards;
         }
 
         public void ResetDeck()
         {
-            if (deckSize < 5)
+            if (deckSize < 20)
             {
-                deckSize = cards.Count;
+                deckSize = Cards.Count;
             }
         }
 
         public int Draw()
         {
             int i1 = rnd.Next(deckSize);
-            int val = cards[i1];
-            cards[i1] = cards[deckSize - 1];
-            cards[deckSize - 1] = val;
+            int val = Cards[i1];
+            Cards[i1] = Cards[deckSize - 1];
+            Cards[deckSize - 1] = val;
             deckSize--;
             return val;
         }
 
+        public void SetState()
+        {
+            stateDeckSize = deckSize;
+        }
 
+        public void RestoreState()
+        {
+            deckSize = stateDeckSize;
+        }
     }
 }
