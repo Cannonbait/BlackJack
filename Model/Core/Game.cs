@@ -6,7 +6,7 @@ namespace Simulation.Core
 {
     public enum Result { Dealer, Player, Tie, None };
 
-    public class Game : IBlackjack, ICloneable
+    public class Game : IBlackjack, IState
     {
         public Deck Deck { get; private set; }
 
@@ -14,8 +14,8 @@ namespace Simulation.Core
 
 
 
-        private Hand Dealer { get; } = new Hand();
-        private Hand Player { get; } = new Hand();
+        public Hand Dealer { get; private set; } = new Hand();
+        public Hand Player { get; private set; } = new Hand();
 
         public int Money { get; private set; } = 0;
 
@@ -23,10 +23,7 @@ namespace Simulation.Core
 
         public Random Rng { get; private set; }
 
-
-        public Hand PlayerHand => Player;
-
-        public Hand DealerHand => Dealer;
+        private bool stateHandOver;
 
 
         public Game(Random rng)
@@ -37,9 +34,9 @@ namespace Simulation.Core
 
         public Game(Game game)
         {
-            Dealer = (Hand)game.DealerHand.Clone();
-            Player = (Hand)game.PlayerHand.Clone();
-            Deck = (Deck)game.Deck.Clone();
+            Dealer = new Hand(game.Dealer);
+            Player = new Hand(game.Player);
+            Deck = new Deck(game.Deck);
             HandOver = game.HandOver;
             this.Rng = game.Rng;
         }
@@ -50,6 +47,7 @@ namespace Simulation.Core
             Money -= BetSize;
             Dealer.Clear();
             Player.Clear();
+            Deck.ResetDeck();
             Dealer.AddCard(Deck.Draw());
             Player.AddCard(Deck.Draw());
             Player.AddCard(Deck.Draw());
@@ -68,11 +66,6 @@ namespace Simulation.Core
             Player.AddCard(Deck.Draw());
         }
 
-        public void PlayerDraw(Card c)
-        {
-            Deck.Remove(c);
-            Player.AddCard(c);
-        }
 
         public void DealerDraw()
         {
@@ -80,11 +73,6 @@ namespace Simulation.Core
         }
 
 
-        public void DealerDraw(Card c)
-        {
-            Deck.Remove(c);
-            Dealer.AddCard(c);
-        }
 
         public void ClearHands()
         {
@@ -103,7 +91,7 @@ namespace Simulation.Core
             {
                 return Result.Player;
             }
-            else if (Dealer.HasBlackjack() && Player.HasBlackjack() || Dealer.Value == Player.Value && !Dealer.HasBlackjack() && !Player.HasBlackjack())
+            else if (Dealer.Value == Player.Value && Dealer.HasBlackjack() == Player.HasBlackjack())
             {
                 return Result.Tie;
             }
@@ -120,7 +108,8 @@ namespace Simulation.Core
         public void Hit()
         {
             PlayerDraw();
-            if (PlayerHand.Value > 21)
+            Player.UpdateValue();
+            if (Player.Value > 21)
             {
                 HandOver = true;
             }
@@ -138,7 +127,7 @@ namespace Simulation.Core
         public void DoubleDown()
         {
             Money -= BetSize;
-            BetSize = BetSize * 2;
+            BetSize *= 2;
             Hit();
             Stand();
         }
@@ -157,9 +146,21 @@ namespace Simulation.Core
             HandOver = true;
         }
 
-        public Object Clone()
+        public void SetState()
         {
-            return new Game(this);
+            Player.SetState();
+            Dealer.SetState();
+            Deck.SetState();
+            stateHandOver = HandOver;
+        }
+
+        public void RestoreState()
+        {
+            Player.RestoreState();
+            Dealer.RestoreState();
+            Deck.RestoreState();
+            HandOver = stateHandOver;
+
         }
     }
 }

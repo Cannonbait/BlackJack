@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Simulation.Core2
+namespace Simulation.Core
 {
     interface IState
     {

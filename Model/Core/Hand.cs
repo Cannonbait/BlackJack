@@ -1,26 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Simulation.Core
 {
 
-    public class Hand : ICloneable
+    public class Hand : IState
     {
-        public Hand()
-        {
+        private List<int> cards = new List<int>();
 
+        private List<int> stateCards;
+
+        public int Value { get; private set; }
+        public Hand() { }
+
+        public Hand(Hand hand)
+        {
+            cards = hand.cards;
+            Value = hand.Value;
         }
 
-        public Hand(List<Card> cards)
+        public void UpdateValue()
         {
-            this.cards = cards;
+            int newValue = cards.Sum();
+            int aces = cards.Count(x => x == 11);
+            while (newValue > 21 && aces > 0)
+            {
+                newValue -= 10;
+                aces--;
+            }
+            Value = newValue;
         }
 
-        private List<Card> cards = new List<Card>();
-        public void AddCard(Card c)
+        public void AddCard(int c)
         {
             cards.Add(c);
+            UpdateValue();
         }
 
         public int Size => cards.Count;
@@ -30,29 +46,7 @@ namespace Simulation.Core
         public void Clear()
         {
             cards.Clear();
-        }
-
-        public int Value
-        {
-            get
-            {
-                int value = 0;
-                int aces = 0;
-                foreach (Card card in cards)
-                {
-                    if (card.Rank == CardRank.Ace)
-                    {
-                        aces++;
-                    }
-                    value += card.Value;
-                }
-                while (value > 21 && aces > 0)
-                {
-                    value -= 10;
-                    aces--;
-                }
-                return value;
-            }
+            Value = 0;
         }
 
 
@@ -61,21 +55,26 @@ namespace Simulation.Core
             return Size == 2 && Value == 21;
         }
 
-        public object Clone()
-        {
-            return new Hand(new List<Card>(cards));
-        }
-
-        public List<Card> Cards => cards;
 
         public override string ToString()
         {
             string str = "";
-            foreach (Card c in cards)
+            foreach (int c in cards)
             {
-                str += c.Rank + " ";
+                str += c + " ";
             }
             return str;
+        }
+
+        public void SetState()
+        {
+            stateCards = new List<int>(cards);
+        }
+
+        public void RestoreState()
+        {
+            cards = new List<int>(stateCards);
+            UpdateValue();
         }
     }
 }

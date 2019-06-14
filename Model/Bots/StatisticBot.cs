@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simulation.Core2;
+using Simulation.Core;
 
 namespace Simulation.Bots
 {

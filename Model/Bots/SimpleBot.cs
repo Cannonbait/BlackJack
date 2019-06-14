@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Simulation.Core2;
+using Simulation.Core;
 
 namespace Simulation.Bots
 {

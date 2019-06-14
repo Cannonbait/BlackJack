@@ -5,70 +5,64 @@ using System.Text;
 namespace Simulation.Core
 {
 
-
-    public class Deck : ICloneable
+    public class Deck : IState
     {
-        public List<Card> Cards { get; private set; } = new List<Card>();
-        static List<Card> completeDeck = new List<Card>();
-        private readonly Random rng;
+        private static readonly List<int> deckValues = new List<int>(new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11 });
+        public List<int> Cards { get; private set; }
 
-        public Deck(Random rng)
-        {
-            this.rng = rng;
-            GenerateCompleteDeck();
-            ResetDeck();
-        }
+        private int stateDeckSize;
 
-        public Deck(List<Card> cards, Random rng)
-        {
-            GenerateCompleteDeck();
-            this.Cards = cards;
-            this.rng = rng;
-        }
+        public int CardsLeft { get; private set; }
 
-        private void GenerateCompleteDeck()
+        private Random rnd;
+
+        public Deck(Random rnd, int numDecks = 1)
         {
-            if (completeDeck.Count == 0)
+            this.rnd = rnd;
+            CardsLeft = deckValues.Count * numDecks * 4;
+            Cards = new List<int>(CardsLeft);
+            for (int i = 0; i < numDecks * 4; i++)
             {
-                completeDeck.Clear();
-                foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))
+                foreach (int value in deckValues)
                 {
-                    foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
-                    {
-                        completeDeck.Add(new Card(suit, rank));
-                    }
+                    Cards.Add(value);
                 }
             }
         }
 
-        public int Size => Cards.Count;
+        public Deck(Deck deck)
+        {
+            this.rnd = deck.rnd;
+            this.CardsLeft = deck.CardsLeft;
+            this.Cards = deck.Cards;
+        }
 
         public void ResetDeck()
         {
-            Cards.Clear();
-            Cards = new List<Card>(completeDeck);
-        }
-
-        public Card Draw()
-        {
-            if (Size == 0)
+            if (CardsLeft < 20)
             {
-                ResetDeck();
+                CardsLeft = Cards.Count;
             }
-            int i = rng.Next(Cards.Count);
-            Card c = Cards[i];
-            Cards.RemoveAt(i);
-            return c;
         }
 
-        public object Clone()
+        public int Draw()
         {
-            return new Deck(new List<Card>(Cards), rng);
+            int i1 = rnd.Next(CardsLeft);
+            int val = Cards[i1];
+            Cards[i1] = Cards[CardsLeft - 1];
+            Cards[CardsLeft - 1] = val;
+            CardsLeft--;
+            return val;
         }
 
-        public void Remove(Card c)
+        public void SetState()
         {
-            Cards.Remove(c);
+            stateDeckSize = CardsLeft;
+        }
+
+        public void RestoreState()
+        {
+            CardsLeft = stateDeckSize;
         }
     }
 }

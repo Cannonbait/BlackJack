@@ -17,13 +17,15 @@ namespace Simulation.Core
 
         bool HandOver { get; }
 
-        Hand PlayerHand { get; }
+        Hand Player { get; }
 
-        Hand DealerHand { get; }
+        Hand Dealer { get; }
 
         Deck Deck { get; }
 
-        Object Clone();
+        void SetState();
+        void RestoreState();
+
 
     }
 }

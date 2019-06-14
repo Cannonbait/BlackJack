@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Simulation.Core2;
+using Simulation.Core;
 
 namespace Simulation.Bots
 {
@@ -24,11 +24,11 @@ namespace Simulation.Bots
             game.SetState();
             for (int i = 0; i < trials; i++)
             {
-                game.RestoreState();
                 if (SimulateHand(game, playerDraws) == Result.Player)
                 {
                     wins++;
                 }
+                game.RestoreState();
             }
             return (double)wins / trials;
 
@@ -36,7 +36,7 @@ namespace Simulation.Bots
 
         private Result SimulateHand(IBlackjack game, int playerDraws)
         {
-            for (int draws = 0; draws < playerDraws; draws++)
+            for (int draws = 0; draws < playerDraws && !game.HandOver; draws++)
             {
                 game.Hit();
             }
@@ -47,11 +47,10 @@ namespace Simulation.Bots
 
         public void Play(IBlackjack game)
         {
-            //Draw a card if better winrate than drawing 0
             double winZero = Simulate(game, 0);
             double winDraw = 0;
 
-            for (int currentDraw = 1; currentDraw < maxDraw; currentDraw++)
+            for (int currentDraw = 1; currentDraw <= maxDraw; currentDraw++)
             {
                 winDraw += Simulate(game, currentDraw);
                 if (currentDraw == 1 && winDraw > doubleDown)
