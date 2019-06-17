@@ -11,23 +11,17 @@ namespace Simulation
 
     class Program
     {
-        const int GAMESTOPLAY = 100000;
+        const int GAMESTOPLAY = 10000;
 
         static void Main(string[] args)
         {
             Random rnd = new Random();
 
-            //Stopwatch stopwatch = Stopwatch.StartNew();
-            //Simulate(new MonteCarloBot(100, 2), 0, rnd.Next());
-            //stopwatch.Stop();
-            //Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            Simulate(new MonteCarloBot(100, 3), 0, rnd.Next());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
 
-            Task[] taskArray = new Task[2];
-            taskArray[0] = new Task(() => Simulate(new MonteCarloBot(500, 2, 0.5), 0, rnd.Next()));
-            taskArray[1] = new Task(() => Simulate(new MonteCarloBot(500, 3, 0.5), 0, rnd.Next()));
-            taskArray[0].Start();
-            taskArray[1].Start();
-            Task.WaitAll(taskArray);
 
 
             //Simulate(new SimpleBot(13));

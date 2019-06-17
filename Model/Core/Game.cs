@@ -135,6 +135,10 @@ namespace Simulation.Core
         public void FinishHand()
         {
             Result result = Winner();
+            if (result == Result.Player && Player.HasBlackjack())
+            {
+                Money += (BetSize * 3);
+            }
             if (result == Result.Player)
             {
                 Money += (BetSize * 2);
