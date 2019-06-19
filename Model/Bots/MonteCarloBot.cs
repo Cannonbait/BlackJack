@@ -24,25 +24,20 @@ namespace Simulation.Bots
             game.SetState();
             for (int i = 0; i < trials; i++)
             {
-                if (SimulateHand(game, playerDraws) == Result.Player)
-                {
-                    wins++;
-                }
+                SimulateHand(game, playerDraws);
                 game.RestoreState();
             }
             return (double)wins / trials;
 
         }
 
-        private Result SimulateHand(IBlackjack game, int playerDraws)
+        private void SimulateHand(IBlackjack game, int playerDraws)
         {
             for (int draws = 0; draws < playerDraws && !game.HandOver; draws++)
             {
                 game.Hit();
             }
             game.Stand();
-            return game.Winner();
-
         }
 
         public void Play(IBlackjack game)

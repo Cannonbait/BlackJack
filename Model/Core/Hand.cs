@@ -12,6 +12,12 @@ namespace Simulation.Core
 
         private List<int> stateCards;
 
+        public int BetSize { get; set; }
+
+        private int stateBetSize;
+
+        public bool HandOver => Value > 21;
+
         public int Value { get; private set; }
         public Hand() { }
 
@@ -69,11 +75,13 @@ namespace Simulation.Core
         public void SetState()
         {
             stateCards = new List<int>(cards);
+            stateBetSize = BetSize;
         }
 
         public void RestoreState()
         {
             cards = new List<int>(stateCards);
+            BetSize = stateBetSize;
             UpdateValue();
         }
     }

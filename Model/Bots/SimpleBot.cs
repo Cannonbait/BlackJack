@@ -15,7 +15,7 @@ namespace Simulation.Bots
 
         public void Play(IBlackjack game)
         {
-            if (game.Player.Value < hitBelow)
+            if (game.ActiveHand.Value < hitBelow)
             {
                 game.Hit();
 

@@ -11,13 +11,29 @@ namespace Simulation.Core
 
         void DoubleDown();
 
-        void SetBet(int bet);
+        void Split();
+
+        void Surrender();
+
+        void Insurance();
+
+        bool CanSplit();
+
+        bool CanSurrender();
+
+        bool CanInsure();
 
         Result Winner();
 
+        bool HandsOver { get; }
+
         bool HandOver { get; }
 
-        Hand Player { get; }
+        int Money { get; }
+
+        List<Hand> Hands { get; }
+
+        Hand ActiveHand { get; }
 
         Hand Dealer { get; }
 
@@ -25,6 +41,10 @@ namespace Simulation.Core
 
         void SetState();
         void RestoreState();
+
+        void NewHand(int i);
+
+        void FinishHand();
 
 
     }

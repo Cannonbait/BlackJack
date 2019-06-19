@@ -10,7 +10,7 @@ namespace Simulation.Bots
     {
         public void Play(IBlackjack game)
         {
-            Console.WriteLine(game.Player);
+            Console.WriteLine(game.ActiveHand);
             Console.WriteLine(game.Dealer);
             Deck deck = game.Deck;
             //Dictionary<int, int> count = ProbabilitiesDraw(deck);

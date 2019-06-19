@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Simulation.Core
@@ -10,60 +11,69 @@ namespace Simulation.Core
     {
         public Deck Deck { get; private set; }
 
-        public bool HandOver { get; private set; } = true;
-
-
-
         public Hand Dealer { get; private set; } = new Hand();
-        public Hand Player { get; private set; } = new Hand();
+        public List<Hand> Hands { get; private set; } = new List<Hand>();
 
         public int Money { get; private set; } = 0;
 
-        public int BetSize { get; private set; } = 1;
-
         public Random Rng { get; private set; }
 
-        private bool stateHandOver;
+        public int CurrentHand { get; private set; }
+
+        public bool HandOver => Hands[CurrentHand].HandOver;
+
+        public bool HandsOver => CurrentHand == Hands.Count;
+
+        public Hand ActiveHand => Hands[CurrentHand];
+
 
 
         public Game(Random rng)
         {
             this.Rng = rng;
             Deck = new Deck(Rng);
+            Hands.Add(new Hand());
         }
 
         public Game(Game game)
         {
             Dealer = new Hand(game.Dealer);
-            Player = new Hand(game.Player);
+
+            foreach (Hand hand in game.Hands)
+            {
+                Hands.Add(new Hand(hand));
+            }
             Deck = new Deck(game.Deck);
-            HandOver = game.HandOver;
             this.Rng = game.Rng;
         }
 
-        public void NewHand()
+        public void NewHand(int bet)
         {
-            HandOver = false;
-            Money -= BetSize;
             Dealer.Clear();
-            Player.Clear();
+            CurrentHand = 0;
+            if (Hands.Count > 1)
+            {
+                Hands.RemoveRange(1, Hands.Count - 1);
+            }
+            foreach (Hand hand in Hands)
+            {
+                hand.Clear();
+                hand.BetSize = bet;
+                Money -= hand.BetSize;
+            }
             Deck.ResetDeck();
             Dealer.AddCard(Deck.Draw());
-            Player.AddCard(Deck.Draw());
-            Player.AddCard(Deck.Draw());
-        }
-
-        public void SetBet(int betSize)
-        {
-            if (HandOver == true)
+            foreach (Hand hand in Hands)
             {
-                BetSize = betSize;
+                hand.AddCard(Deck.Draw());
+                hand.AddCard(Deck.Draw());
             }
         }
 
+
         public void PlayerDraw()
         {
-            Player.AddCard(Deck.Draw());
+            Hands[CurrentHand].AddCard(Deck.Draw());
         }
 
 
@@ -76,26 +86,31 @@ namespace Simulation.Core
 
         public void ClearHands()
         {
-            Player.Clear();
+            Hands.ForEach(x => x.Clear());
             Dealer.Clear();
         }
 
 
         public Result Winner()
         {
-            if (Player.Bust)
+            return Winner(Hands[CurrentHand]);
+        }
+
+        private Result Winner(Hand hand)
+        {
+            if (hand.Bust)
             {
                 return Result.Dealer;
             }
-            else if (Dealer.Bust)
+            else if (hand.Bust)
             {
                 return Result.Player;
             }
-            else if (Dealer.Value == Player.Value && Dealer.HasBlackjack() == Player.HasBlackjack())
+            else if (Dealer.Value == hand.Value && Dealer.HasBlackjack() == hand.HasBlackjack())
             {
                 return Result.Tie;
             }
-            else if (Dealer.Value > Player.Value || Dealer.Value == Player.Value && !Player.HasBlackjack())
+            else if (Dealer.Value > hand.Value || Dealer.Value == hand.Value && !hand.HasBlackjack())
             {
                 return Result.Dealer;
             }
@@ -108,63 +123,103 @@ namespace Simulation.Core
         public void Hit()
         {
             PlayerDraw();
-            Player.UpdateValue();
-            if (Player.Value > 21)
+            Hands[CurrentHand].UpdateValue();
+            if (Hands[CurrentHand].HandOver)
             {
-                HandOver = true;
+                CurrentHand++;
             }
         }
 
         public void Stand()
         {
-            while (Dealer.Value < 17)
+            if (CurrentHand < Hands.Count)
             {
-                DealerDraw();
+                CurrentHand++;
+                return;
             }
-            HandOver = true;
         }
 
         public void DoubleDown()
         {
-            Money -= BetSize;
-            BetSize *= 2;
+            Money -= Hands[CurrentHand].BetSize;
+            Hands[CurrentHand].BetSize *= 2;
             Hit();
             Stand();
         }
 
         public void FinishHand()
         {
-            Result result = Winner();
-            if (result == Result.Player && Player.HasBlackjack())
+            while (Dealer.Value < 17)
             {
-                Money += (BetSize * 3);
+                DealerDraw();
             }
-            if (result == Result.Player)
+            foreach (Hand hand in Hands)
             {
-                Money += (BetSize * 2);
+                Result result = Winner(hand);
+                if (result == Result.Player && hand.HasBlackjack())
+                {
+                    Money += (hand.BetSize * 3);
+                }
+                if (result == Result.Player)
+                {
+                    Money += (hand.BetSize * 2);
+                }
+                else if (result == Result.Tie)
+                {
+                    Money += hand.BetSize;
+                }
             }
-            else if (result == Result.Tie)
-            {
-                Money += BetSize;
-            }
-            HandOver = true;
         }
 
         public void SetState()
         {
-            Player.SetState();
+            foreach (Hand hand in Hands)
+            {
+                hand.SetState();
+            }
             Dealer.SetState();
             Deck.SetState();
-            stateHandOver = HandOver;
         }
 
         public void RestoreState()
         {
-            Player.RestoreState();
+            foreach (Hand hand in Hands)
+            {
+                hand.RestoreState();
+            }
             Dealer.RestoreState();
             Deck.RestoreState();
-            HandOver = stateHandOver;
 
+        }
+
+        public void Split()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Surrender()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insurance()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanSplit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanSurrender()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanInsure()
+        {
+            throw new NotImplementedException();
         }
     }
 }
